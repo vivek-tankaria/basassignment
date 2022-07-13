@@ -12,4 +12,4 @@ I have used `Laravel` framework. Laravel has inbuilt command line interface call
 
 4. To check the artisan CLI command created to generate the payment report execute  `php artisan list | grep 'getpaymentdates'` command in Terminal. 
 
-5. To generate the report execute `php artisan command:getpaymentdates {FILENAME.csv}`
+5. To generate the report execute `php artisan command:getpaymentdates`
