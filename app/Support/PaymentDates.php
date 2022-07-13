@@ -1,10 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Support;
 
 use Error;
 use Illuminate\Support\Carbon;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class PaymentDates
 {
@@ -14,7 +14,7 @@ class PaymentDates
      *
      * @return bool
      */
-    public function generatePaymentDates($filePath): bool
+    public function generatePaymentDatesCSV($filePath): bool
     {
         try {
             $fp = fopen($filePath, "w+");

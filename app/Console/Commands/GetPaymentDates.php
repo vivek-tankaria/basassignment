@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
@@ -12,7 +13,7 @@ class GetPaymentDates extends Command
      *
      * @var string
      */
-    protected $signature = 'command:getpaymentdates {outputfile}';
+    protected $signature = 'command:getpaymentdates';
 
     /**
      * The console command description.
@@ -28,21 +29,22 @@ class GetPaymentDates extends Command
      */
     public function handle(PaymentDates $paymentDates)
     {
-        $outputfile = $this->argument('outputfile');
+        $outputFileName = $this->ask('Enter Output File Name', 'outputFileName');
         
-        if (!checkIfCSV($outputfile)) {
-            echo "Output file format is invalid. Only CSV file extension is supported.\n";
-            return 0;
+        if (!checkIfCSV($outputFileName)) {
+            $this->error('Error:: outputFileName format is invalid. Only CSV file extension is supported.');
+            
+            return;
         }
-
-        $storagePath = storage_path();
-        $filePath = $storagePath."/".$outputfile;
         
-        $status = $paymentDates->generatePaymentDates($filePath);
+        $storagePath = storage_path();
+        $filePath = $storagePath."/".$outputFileName;
+        
+        $status = $paymentDates->generatePaymentDatesCSV($filePath);
         if ($status) {
-            echo "Payment dates sheet is generated and is available at following path :: $filePath\n";
+            $this->info(sprintf('Payment dates sheet is generated and is available at following path :: %s', $filePath));
         } else {
-            echo "Error generating the payment dates sheet. \n";
+            $this->error('Error generating the payment dates csv.');
         }
     }
 }
